@@ -1,14 +1,41 @@
-function Pet(){
+import {useState} from "react"
+
+function Pet({pet, updatePet, deletePet}){
+
+    const [displayName, setDisplayName] = useState(true)
+    const [updatedPetName, setUpdatedPetName] = useState("")
+
+    function updateDisplayName(){
+        setDisplayName(displayName => !displayName)
+    }
+
+    function handleSubmit(event){
+        event.preventDefault()
+        updatePet({name: updatedPetName}, pet.id)
+    }
+
+    function handleChange(event){
+        setUpdatedPetName(event.target.value)
+    }
+
+    function handleAdoptPet(){
+        deletePet(pet.id)
+    }
+
     return (
         <li className="pet">
-            <img src={"RENDER IMAGE"} alt={"RENDER PET NAME"}/>
-            <h4>{"CONDITIONALLY RENDER NAME OR ANIMAL TYPE"}</h4>
+            <img onClick={updateDisplayName} src={pet.image} alt={pet.name}/>
+            <h4>{displayName ? pet.name : pet.animal_type}</h4>
             <p>
                 {
-                    "CONDITIONALLY RENDER WHETHER THE PET IS FROM A PET SHOP OR FROM THE WILD"
+                    pet.fromPetShop ? "From a Pet Shop" : "From the wild"
                 }
             </p>
-            <button className="adopt-button">Adopt</button>
+            <button onClick={handleAdoptPet} className="adopt-button">Adopt</button>
+            <form onSubmit={handleSubmit}>
+                <input onChange={handleChange} type="text" name="name" placeholder="Pet name" value={updatedPetName}/>
+                <button type="submit">Update Pet Name</button>
+            </form>
         </li>
     );
 }
