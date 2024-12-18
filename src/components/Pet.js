@@ -3,9 +3,6 @@ import {useState} from "react";
 function Pet({pet}){
 
     const [displayName, setDisplayName] = useState(true)
-    console.log(displayName)
-
-    // console.log(pet)
 
     function handleClick(){
         setDisplayName(!displayName)
