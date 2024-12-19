@@ -14,9 +14,13 @@ function PetPage(){
         .then(petsData => setPets(petsData))
     }, [])
 
+    function addPet(newPet){
+        setPets([...pets, newPet])
+    }
+
     return (
         <main>
-            <NewPetForm/>
+            <NewPetForm addPet={addPet}/>
             <Search/>
             <PetList pets={pets}/>
         </main>
